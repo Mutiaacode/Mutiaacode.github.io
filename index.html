@@ -1,485 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Tracer Study - SMKN 3 METRO</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&display=swap');
+@keyframes scanline { 0%{top:-10%} 100%{top:110%} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+@keyframes race-stripe { 0%{transform:translateX(-100%)} 100%{transform:translateX(400%)} }
 
-<body>
-    <div class="container mt-4 mb-5">
-        <!-- Header -->
-        <div class="bg-success text-white p-4 rounded-top">
-            <div class="d-flex align-items-center">
-                <img src="https://www.smkn3metro.sch.id/storage/uploads/2025/05/6816545e702a7.webp"
-                    alt="Logo SMKN 3 Metro" class="me-3" style="max-height: 80px;">
-                <div>
-                    <h2 class="mb-0">Formulir Tracer Study</h2>
-                    <p class="mb-0">SMK NEGERI 3 METRO</p>
-                </div>
-            </div>
-        </div>
+.card-wrap {
+  display:flex; justify-content:center; align-items:center;
+  padding: 32px 16px; background:#0a0a0a; border-radius:16px; overflow:hidden; position:relative;
+}
+.card-wrap::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,210,190,0.015) 3px, rgba(0,210,190,0.015) 4px);
+  pointer-events:none;
+}
 
-        <!-- Form Container -->
-        <form id="tracerform" class="bg-white p-4 shadow-sm rounded-bottom">
-            <div class="alert alert-info" role="alert">
-                <i class="fas fa-info-circle me-2"></i>Silakan isi formulir ini dengan lengkap dan benar
-            </div>
+.pass {
+  width:360px; background:#111; border-radius:12px; overflow:hidden; position:relative;
+  border:1px solid #00D2BE; font-family:'Barlow Condensed',sans-serif;
+}
 
-            <!-- Data Pribadi -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i> 1. Data Pribadi
-            </div>
+.pass-header {
+  background:#00D2BE; padding:10px 16px 8px; display:flex; justify-content:space-between; align-items:center;
+}
+.team-name {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700;
+  color:#0a0a0a; letter-spacing:2.5px; text-transform:uppercase;
+}
+.season-badge {
+  background:#0a0a0a; color:#00D2BE; font-size:10px; font-weight:700;
+  padding:2px 8px; border-radius:2px; letter-spacing:1px; font-family:'Share Tech Mono',monospace;
+}
 
-            <div class="row mb-3">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">A. Nama Lengkap</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">B. Jenis Kelamin</label>
-                    <select class="form-select" required>
-                        <option value="">--Pilih--</option>
-                        <option>Laki-laki</option>
-                        <option>Perempuan</option>
-                    </select>
-                </div>
-            </div>
+.pass-mid-stripe {
+  height:4px; background:#0a0a0a; position:relative; overflow:hidden;
+}
+.pass-mid-stripe::after {
+  content:''; position:absolute; top:0; left:0; height:100%; width:30%;
+  background:#00D2BE; animation: race-stripe 2.5s linear infinite;
+}
 
-            <div class="mb-3">
-                <label class="form-label">C. Alamat</label>
-                <textarea class="form-control" rows="2" required></textarea>
-            </div>
+.pass-body {
+  padding:16px; display:flex; gap:14px; align-items:flex-start;
+}
+.photo-box {
+  width:76px; min-width:76px; height:90px; background:#1a1a1a;
+  border:1.5px solid #00D2BE; border-radius:4px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; position:relative; overflow:hidden;
+}
+.photo-initials {
+  font-size:22px; font-weight:900; color:#00D2BE; letter-spacing:0px;
+  font-family:'Barlow Condensed',sans-serif; line-height:1;
+}
+.photo-number {
+  font-size:28px; font-weight:900; color:#00D2BE;
+  font-family:'Barlow Condensed',sans-serif; line-height:1; letter-spacing:-1px;
+}
+.photo-label {
+  font-size:9px; color:#444; letter-spacing:2px; margin-top:4px;
+  font-family:'Share Tech Mono',monospace;
+}
+.photo-corner {
+  position:absolute; width:10px; height:10px; border-color:#00D2BE; border-style:solid;
+}
+.photo-corner.tl { top:3px; left:3px; border-width:1.5px 0 0 1.5px; }
+.photo-corner.tr { top:3px; right:3px; border-width:1.5px 1.5px 0 0; }
+.photo-corner.bl { bottom:3px; left:3px; border-width:0 0 1.5px 1.5px; }
+.photo-corner.br { bottom:3px; right:3px; border-width:0 1.5px 1.5px 0; }
 
-            <div class="row mb-3">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">D. No Telephon/Hp</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">E. Email</label>
-                    <input type="email" class="form-control" required>
-                </div>
-            </div>
+.pass-info { flex:1; }
+.pass-type {
+  font-size:9px; letter-spacing:3px; color:#00D2BE; margin-bottom:4px;
+  font-family:'Share Tech Mono',monospace; text-transform:uppercase;
+}
+.pass-name {
+  font-size:26px; font-weight:900; color:#fff; letter-spacing:1px;
+  text-transform:uppercase; line-height:1; margin-bottom:8px;
+}
+.pass-fields { display:flex; flex-direction:column; gap:5px; }
+.field-row { display:flex; flex-direction:column; }
+.field-label {
+  font-size:9px; color:#555; letter-spacing:2px; text-transform:uppercase;
+  font-family:'Share Tech Mono',monospace;
+}
+.field-value {
+  font-size:12px; color:#ccc; font-weight:600; letter-spacing:0.5px;
+}
+.field-value.teal { color:#00D2BE; }
 
-            <div class="mb-4">
-                <label class="form-label">F. Sarana Termudah Untuk Dihubungi</label>
-                <select class="form-select" required>
-                    <option value="">--Pilih--</option>
-                    <option>Telp Rumah</option>
-                    <option>Hand Phone</option>
-                    <option>Telp Kantor</option>
-                    <option>Email</option>
-                    <option>Pos</option>
-                </select>
-            </div>
+.access-bar {
+  padding: 10px 16px; border-top:1px solid #1f1f1f;
+  display:flex; gap:6px; flex-wrap:wrap;
+}
+.access-pill {
+  font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  padding:3px 8px; border-radius:2px; font-family:'Share Tech Mono',monospace;
+  background:#1a1a1a; border:1px solid #00D2BE; color:#00D2BE;
+}
+.access-pill.active { background:#00D2BE; color:#0a0a0a; }
 
-            <!-- Data Akademik -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i> 2. Data Akademik
-            </div>
+.pass-footer {
+  background:#0d0d0d; padding:8px 16px; display:flex; justify-content:space-between; align-items:center;
+  border-top:1px solid #1a1a1a;
+}
+.barcode { display:flex; gap:1px; align-items:flex-end; }
+.barcode span { background:#00D2BE; display:block; width:2px; opacity:0.7; }
+.valid-indicator {
+  display:flex; align-items:center; gap:5px;
+  font-size:9px; color:#00D2BE; letter-spacing:2px;
+  font-family:'Share Tech Mono',monospace;
+}
+.dot { width:6px; height:6px; background:#00D2BE; border-radius:50%; animation: blink 1.4s ease-in-out infinite; }
 
-            <div class="mb-3">
-                <label class="form-label">A. Kompetensi Keahlian</label>
-                <select class="form-select" required>
-                    <option value="">--Pilih--</option>
-                    <option>Rekayasa Perangkat Lunak</option>
-                    <option>Teknik Komputer Jaringan</option>
-                    <option>Desain Komunikasi Visual</option>
-                    <option>Teknik Mesin</option>
-                    <option>Teknik Listrik</option>
-                </select>
-            </div>
+.scanline {
+  position:absolute; left:0; right:0; height:2px;
+  background:rgba(0,210,190,0.12); animation: scanline 4s linear infinite; pointer-events:none;
+}
 
-            <div class="row mb-4">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">B. Tahun Masuk</label>
-                    <input type="number" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">C. Tahun Lulus</label>
-                    <input type="number" class="form-control" required>
-                </div>
-            </div>
+.car-number {
+  font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900;
+  color:rgba(0,210,190,0.06); position:absolute; right:8px; bottom:44px; line-height:1;
+  pointer-events:none; user-select:none; letter-spacing:-2px;
+}
+</style>
 
-            <!-- Data Pekerjaan -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i>3. Data Pekerjaan
-            </div>
+<div class="card-wrap">
+  <div class="pass">
+    <div class="scanline"></div>
+    <div class="car-number">GR63</div>
 
-            <div class="mb-3">
-                <label class="form-label">A. Pernah melamar pekerjaan?</label>
-                <select class="form-select" id="status_lamar" onchange="tampil_status()">
-                    <option value="">-- Silakan pilih status anda --</option>
-                    <option value="pernahLamar">Pernah Melamar</option>
-                    <option value="belumLamar">Belum Pernah Melamar</option>
-                </select>
-            </div>
-
-            <div id="status_bekerja" style="display: none;" class="ms-3 mb-4 border-left ps-2">
-                <div class="mb-3">
-                    <label class="form-label">Berapa kali?</label>
-                    <input type="number" class="form-control">
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">B. Jenis Pekerjaan</label>
-                        <select class="form-select">
-                            <option value="">--Pilih--</option>
-                            <option>PNS</option>
-                            <option>Swasta</option>
-                            <option>Wiraswasta</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nama Instansi / Perusahaan</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Alamat Instansi / Perusahaan</label>
-                    <textarea class="form-control" rows="2"></textarea>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Jabatan</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Masa Kerja</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Deskripsi Pekerjaan</label>
-                    <textarea class="form-control" rows="2"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Mulai Bekerja (Tanggal)</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">C. Pekerjaan Sesuai Keahlian?</label>
-                        <select class="form-select">
-                            <option value="">--Pilih--</option>
-                            <option>Ya</option>
-                            <option>Tidak</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">D. Masa Tunggu</label>
-                        <select class="form-select">
-                            <option value="">--Pilih--</option>
-                            <option>Kurang dari 6 bulan</option>
-                            <option>Antara 6–12 bulan</option>
-                            <option>Lebih dari 12 bulan</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">E. Besar Gaji</label>
-                        <select class="form-select">
-                            <option value="">--Pilih--</option>
-                            <option>Rp500.000</option>
-                            <option>Rp500.000 – Rp1.000.000</option>
-                            <option>Rp1.000.000 – Rp1.500.000</option>
-                            <option>Rp1.500.000 – Rp2.000.000</option>
-                            <option>Rp2.000.000</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Data Kuliah -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i>4. Data Bagi Alumni Yang Studi Lanjut
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">A. Apakah Anda Melanjutkan Studi</label>
-                <select class="form-select" id="status_kuliah_select" onchange="tampil_status()">
-                    <option value="">-- Silahkan Pilih Status Anda --</option>
-                    <option value="kuliah">Ya</option>
-                    <option value="tidak_kuliah">Tidak</option>
-                </select>
-            </div>
-
-            <div id="status_kuliah" style="display: none;" class="ms-3 mb-4 border-left ps-2">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nama Universitas</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Jurusan / Program Studi</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Alamat Universitas</label>
-                    <textarea class="form-control" rows="2"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Bulan Dan Tahun Awal Studi</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-
-            <!-- Kusioner -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i>5. Kusioner Profil Lulusan
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">1. Apakah Anda merasa siap kerja?</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Siap</option>
-                        <option>Kurang</option>
-                        <option>Tidak</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">2. Rasio pelamar vs diterima</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>&lt; 1:10</option>
-                        <option>1:10 - 1:50</option>
-                        <option>&gt; 1:50</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">3. Faktor yang perlu ditingkatkan</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Soft Skill</option>
-                        <option>Bahasa asing</option>
-                        <option>Teknologi</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">4. Pekerjaan sesuai kemampuan akademik?</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Sesuai</option>
-                        <option>Kurang</option>
-                        <option>Tidak</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">5. Alasan bekerja di luar bidang keahlian</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Ketersediaan lowongan</option>
-                        <option>Minat</option>
-                        <option>Pendapatan</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">6. Ilmu & pengalaman cukup untuk wirausaha?</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Cukup</option>
-                        <option>Kurang</option>
-                        <option>Tidak</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">7. Faktor pendukung wirausaha</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Soft Skill</option>
-                        <option>Pengalaman</option>
-                        <option>Permodalan</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">8. Kesulitan mencari/membuat pekerjaan</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Permodalan</option>
-                        <option>Kurangnya pengalaman</option>
-                        <option>Kurangnya jaringan/relasi</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">9. Hal positif yang memudahkan kerja</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Materi pelajaran</option>
-                        <option>Soft Skill</option>
-                        <option>Relasi</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">10. Kesesuaian kurikulum saat bekerja</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Sesuai</option>
-                        <option>Kurang</option>
-                        <option>Tidak</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">11. Saran perbaikan proses belajar</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Peningkatan teori & praktek</option>
-                        <option>Fasilitas/sarana</option>
-                        <option>Mapel up to date</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">12. Harapan terhadap hubungan sekolah dengan industri</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Open recruitment</option>
-                        <option>Kesempatan magang</option>
-                        <option>Beasiswa</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">13. Keberadaan ikatan alumni bermanfaat?</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Bermanfaat</option>
-                        <option>Kurang</option>
-                        <option>Tidak</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">14. Fungsi utama ikatan alumni</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Info lowongan</option>
-                        <option>Jaringan kerja</option>
-                        <option>Info teknologi</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">15. Harapan terhadap ikatan alumni</label>
-                    <select class="form-select" required>
-                        <option value="" selected disabled>-- Pilih Jawaban --</option>
-                        <option>Informasi kerja</option>
-                        <option>Recruitment</option>
-                        <option>Magang/Beasiswa</option>
-                        <option>Lain-lain</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">16. Saran untuk perbaikan kurikulum</label>
-                    <textarea class="form-control" rows="2"></textarea>
-                </div>
-            </div>
-
-            <!-- 6. TANDA TANGAN -->
-            <div class="bg-success bg-opacity-90 text-white p-2 rounded mb-3 mt-4">
-                <i class="fas fa-briefcase me-2"></i> 6. Tanda Tangan
-            </div>
-
-            <div class="border p-3 mb-4">
-                <p>Dengan ini saya menyatakan bahwa data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</p>
-                <div class="mb-3">
-                    <label class="form-label">Nama Alumni (Sebagai Tanda Tangan Digital)</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <p class="text-muted">Tanggal: <span id="current-date"></span></p>
-            </div>
-
-            <div class="mb-4">
-                <button type="submit" class="btn btn-success">
-                    Kirim Formulir
-                </button>
-            </div>
-
-            <div class="text-center text-muted">
-                <p>© Mutia Pegi Intanswari - Formulir Tracer Study</p>
-            </div>
-        </form>
+    <div class="pass-header">
+      <div class="team-name">Mercedes AMG Petronas F1 Team</div>
+      <div class="season-badge">2025</div>
     </div>
 
+    <div class="pass-mid-stripe"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.getElementById('tracerform').addEventListener('submit', function (e) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Formulir berhasil dikirim!',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                const form = document.getElementById('tracerform');
-                form.reset();
-            });
-        });
+    <div class="pass-body">
+      <div class="photo-box">
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+        <div class="photo-initials">GR</div>
+        <div class="photo-number">63</div>
+        <div class="photo-label">CREW</div>
+      </div>
 
-        //tanggalnya di bagian tanda tangan
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('id-ID');
+      <div class="pass-info">
+        <div class="pass-type">Paddock Pass — All Areas</div>
+        <div class="pass-name">Mutiadev</div>
+        <div class="pass-fields">
+          <div class="field-row">
+            <span class="field-label">Role</span>
+            <span class="field-value teal">Full-Stack Developer</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Chassis</span>
+            <span class="field-value">W15 — Silver Arrow</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Base</span>
+            <span class="field-value">Lampung, Indonesia</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        function tampil_status() {
-            let status_lamar = document.querySelector("#status_lamar");
-            let status_bekerja = document.querySelector("#status_bekerja");
-            let status_kuliah_select = document.querySelector("#status_kuliah_select");
-            let status_kuliah = document.querySelector("#status_kuliah");
+    <div class="access-bar">
+      <div class="access-pill active">Garage</div>
+      <div class="access-pill active">Pit Lane</div>
+      <div class="access-pill active">Paddock</div>
+      <div class="access-pill">Media</div>
+      <div class="access-pill">Hospitality</div>
+    </div>
 
-            if (status_lamar.value == "pernahLamar") {
-                status_bekerja.style.display = "block";
-            }
-            if (status_lamar.value == "belumLamar") {
-                status_bekerja.style.display = "none";
-            }
-
-            if (status_kuliah_select.value == "kuliah") {
-                status_kuliah.style.display = "block";
-            }
-            if (status_kuliah_select.value == "tidak_kuliah") {
-                status_kuliah.style.display = "none";
-            }
-        }
-    </script>
-</body>
-
-</html>
+    <div class="pass-footer">
+      <div class="valid-indicator">
+        <div class="dot"></div>
+        VERIFIED
+      </div>
+      <div class="barcode">
+        <span style="height:18px"></span><span style="height:24px"></span><span style="height:14px"></span>
+        <span style="height:22px"></span><span style="height:18px"></span><span style="height:26px"></span>
+        <span style="height:12px"></span><span style="height:20px"></span><span style="height:24px"></span>
+        <span style="height:16px"></span><span style="height:22px"></span><span style="height:18px"></span>
+        <span style="height:26px"></span><span style="height:14px"></span><span style="height:20px"></span>
+        <span style="height:16px"></span><span style="height:24px"></span><span style="height:18px"></span>
+      </div>
+      <div style="font-size:9px;color:#333;font-family:'Share Tech Mono',monospace;">MUT-2025-GR63</div>
+    </div>
+  </div>
+</div>
